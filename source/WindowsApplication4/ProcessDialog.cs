@@ -101,13 +101,13 @@ namespace SkeletonStructure
                 foreach (Match m in re.Matches(path))  // assuming text is the text to search
                 {
                     string replace = null;
-                    // check m.Value against db e.g.
-                    if (m.Value == "module")
+                    
+                    if (m.Value == "#module#")
                     {
                         replace = tree.Nodes[0].Text;
                     }
 
-                    if (replace != null)  // assuming DBCheck returns null for invalid replacement
+                    if (replace != null)
                         sb.Replace(m.Value, replace);
                 } 
                 System.IO.Directory.CreateDirectory(@startPath + path);
@@ -132,10 +132,15 @@ namespace SkeletonStructure
 
             foreach (Match m in re.Matches(path))  // assuming text is the text to search
             {
-                
-                // check m.Value against db e.g.
-                string replace = tree.Nodes[0].Text;
-                if (replace != null)  // assuming DBCheck returns null for invalid replacement
+
+                string replace = null;
+
+                if (m.Value == "#module#")
+                {
+                    replace = tree.Nodes[0].Text;
+                }
+
+                if (replace != null)
                     sb.Replace(m.Value, replace);
             }
 
@@ -149,10 +154,15 @@ namespace SkeletonStructure
 
                 foreach (Match m in re.Matches(row["contents"].ToString()))  // assuming text is the text to search
                 {
-                    
-                    // check m.Value against db e.g.
-                    string replace = tree.Nodes[0].Text;
-                    if (replace != null)  // assuming DBCheck returns null for invalid replacement
+
+                    string replace = null;
+
+                    if (m.Value == "#module#")
+                    {
+                        replace = tree.Nodes[0].Text;
+                    }
+
+                    if (replace != null)
                         sbcontents.Replace(m.Value, replace);
                 }
 

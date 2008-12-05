@@ -19,6 +19,15 @@ namespace SkeletonStructure
         private int openDataSetIndex;
         private int count = 0;
 
+        // Node being dragged
+        private TreeNode dragNode = null;
+
+        // Temporary drop node for selection
+        private TreeNode tempDropNode = null;
+
+        // Timer for scrolling
+        private Timer timer = new Timer();
+
         public mainForm()
         {
             InitializeComponent();
@@ -400,6 +409,192 @@ namespace SkeletonStructure
             {
             }
         }
+
+
+        private void treeView_ItemDrag(object sender, System.Windows.Forms.ItemDragEventArgs e)
+        {
+            // Get drag node and select it
+            this.dragNode = (TreeNode)e.Item;
+            this.treeView1.SelectedNode = this.dragNode;
+
+            // Reset image list used for drag image
+            this.imageListDrag.Images.Clear();
+            this.imageListDrag.ImageSize = new Size(this.dragNode.Bounds.Size.Width + this.treeView1.Indent, this.dragNode.Bounds.Height);
+
+            // Create new bitmap
+            // This bitmap will contain the tree node image to be dragged
+            Bitmap bmp = new Bitmap(this.dragNode.Bounds.Width + this.treeView1.Indent, this.dragNode.Bounds.Height);
+
+            // Get graphics from bitmap
+            Graphics gfx = Graphics.FromImage(bmp);
+
+            // Draw node icon into the bitmap
+            gfx.DrawImage(this.imageListTreeView.Images[0], 0, 0);
+
+            // Draw node label into bitmap
+            gfx.DrawString(this.dragNode.Text,
+                this.treeView1.Font,
+                new SolidBrush(this.treeView1.ForeColor),
+                (float)this.treeView1.Indent, 1.0f);
+
+            // Add bitmap to imagelist
+            this.imageListDrag.Images.Add(bmp);
+
+            // Get mouse position in client coordinates
+            Point p = this.treeView1.PointToClient(Control.MousePosition);
+
+            // Compute delta between mouse position and node bounds
+            int dx = p.X + this.treeView1.Indent - this.dragNode.Bounds.Left;
+            int dy = p.Y - this.dragNode.Bounds.Top;
+
+            // Begin dragging image
+            if (DragHelper.ImageList_BeginDrag(this.imageListDrag.Handle, 0, dx, dy))
+            {
+                // Begin dragging
+                this.treeView1.DoDragDrop(bmp, DragDropEffects.Move);
+                // End dragging image
+                DragHelper.ImageList_EndDrag();
+            }
+
+        }
+
+        private void treeView1_DragOver(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            // Compute drag position and move image
+            Point formP = this.PointToClient(new Point(e.X, e.Y));
+            DragHelper.ImageList_DragMove(formP.X - this.treeView1.Left, formP.Y - this.treeView1.Top);
+
+            // Get actual drop node
+            TreeNode dropNode = this.treeView1.GetNodeAt(this.treeView1.PointToClient(new Point(e.X, e.Y)));
+            if (dropNode == null)
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
+
+            e.Effect = DragDropEffects.Move;
+
+            // if mouse is on a new node select it
+            if (this.tempDropNode != dropNode)
+            {
+                DragHelper.ImageList_DragShowNolock(false);
+                this.treeView1.SelectedNode = dropNode;
+                DragHelper.ImageList_DragShowNolock(true);
+                tempDropNode = dropNode;
+            }
+
+            // Avoid that drop node is child of drag node 
+            TreeNode tmpNode = dropNode;
+            while (tmpNode.Parent != null)
+            {
+                if (tmpNode.Parent == this.dragNode) e.Effect = DragDropEffects.None;
+                tmpNode = tmpNode.Parent;
+            }
+        }
+
+        private void treeView1_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            // Unlock updates
+            DragHelper.ImageList_DragLeave(this.treeView1.Handle);
+
+            // Get drop node
+            TreeNode dropNode = this.treeView1.GetNodeAt(this.treeView1.PointToClient(new Point(e.X, e.Y)));
+
+            // If drop node isn't equal to drag node, add drag node as child of drop node
+            if (this.dragNode != dropNode)
+            {
+                // Remove drag node from parent
+                if (this.dragNode.Parent == null)
+                {
+                    this.treeView1.Nodes.Remove(this.dragNode);
+                }
+                else
+                {
+                    this.dragNode.Parent.Nodes.Remove(this.dragNode);
+                }
+
+                // Add drag node to drop node
+                dropNode.Nodes.Add(this.dragNode);
+                dropNode.ExpandAll();
+
+                // Set drag node to null
+                this.dragNode = null;
+
+                // Disable scroll timer
+                this.timer.Enabled = false;
+            }
+        }
+
+        private void treeView1_DragEnter(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            DragHelper.ImageList_DragEnter(this.treeView1.Handle, e.X - this.treeView1.Left,
+                e.Y - this.treeView1.Top);
+
+            // Enable timer for scrolling dragged item
+            this.timer.Enabled = true;
+        }
+
+        private void treeView1_DragLeave(object sender, System.EventArgs e)
+        {
+            DragHelper.ImageList_DragLeave(this.treeView1.Handle);
+
+            // Disable timer for scrolling dragged item
+            this.timer.Enabled = false;
+        }
+
+        private void treeView1_GiveFeedback(object sender, System.Windows.Forms.GiveFeedbackEventArgs e)
+        {
+            if (e.Effect == DragDropEffects.Move)
+            {
+                // Show pointer cursor while dragging
+                e.UseDefaultCursors = false;
+                this.treeView1.Cursor = Cursors.Default;
+            }
+            else e.UseDefaultCursors = true;
+
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            // get node at mouse position
+            Point pt = PointToClient(Control.MousePosition);
+            TreeNode node = this.treeView1.GetNodeAt(pt);
+
+            if (node == null) return;
+
+            // if mouse is near to the top, scroll up
+            if (pt.Y < 30)
+            {
+                // set actual node to the upper one
+                if (node.PrevVisibleNode != null)
+                {
+                    node = node.PrevVisibleNode;
+
+                    // hide drag image
+                    DragHelper.ImageList_DragShowNolock(false);
+                    // scroll and refresh
+                    node.EnsureVisible();
+                    this.treeView1.Refresh();
+                    // show drag image
+                    DragHelper.ImageList_DragShowNolock(true);
+
+                }
+            }
+            // if mouse is near to the bottom, scroll down
+            else if (pt.Y > this.treeView1.Size.Height - 30)
+            {
+                if (node.NextVisibleNode != null)
+                {
+                    node = node.NextVisibleNode;
+
+                    DragHelper.ImageList_DragShowNolock(false);
+                    node.EnsureVisible();
+                    this.treeView1.Refresh();
+                    DragHelper.ImageList_DragShowNolock(true);
+                }
+            }
+        }
+
 
     }
 }

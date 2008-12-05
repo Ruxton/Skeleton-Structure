@@ -69,6 +69,7 @@
     <Compile Include="aboutBox.Designer.cs">
       <DependentUpon>aboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="DragHelper.cs" />
     <Compile Include="DisplayOptionsPage.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -129,6 +129,8 @@ namespace SkeletonStructure
                 dataSet1.AcceptChanges();
 
                 tempNode.Tag = newRow["file_id"];
+                tempNode.ImageIndex = 1;
+                tempNode.SelectedImageIndex = 1;
                 treeView1.LabelEdit = true;
                 if(treeView1.SelectedNode.Tag.ToString() == "folder")
                     treeView1.SelectedNode.Nodes.Add(tempNode);
@@ -257,6 +259,7 @@ namespace SkeletonStructure
                 treeView1.Nodes.Clear();
             }
             bindingSource1.DataSource = dataSet1;
+            treeView1.Sort();
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -270,7 +273,7 @@ namespace SkeletonStructure
             }
             catch (SerializationException ex)
             {
-                MessageBox.Show("We cannot open this file, perhaps\nit wasn't created with Skeleton Structure?", "Cannot Open File");
+                MessageBox.Show("Cannot open this file, perhaps\nit wasn't created with Skeleton Structure?", "Cannot Open File");
             }
             finally
             {
@@ -522,6 +525,7 @@ namespace SkeletonStructure
 
                 // Disable scroll timer
                 this.timer.Enabled = false;
+                treeView1.Sort();
             }
         }
 
@@ -592,6 +596,20 @@ namespace SkeletonStructure
                     this.treeView1.Refresh();
                     DragHelper.ImageList_DragShowNolock(true);
                 }
+            }
+        }
+
+        private void contextMenuStrip2_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void flagAsFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if ((treeView1.SelectedNode != null) && (treeView1.SelectedNode != treeView1.TopNode))
+            {
+                    treeView1.SelectedNode.ImageIndex = 1;
+                    treeView1.SelectedNode.SelectedImageIndex = 1;
             }
         }
 

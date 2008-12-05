@@ -48,6 +48,7 @@ namespace SkeletonStructure
             this.siteName = new System.Windows.Forms.ColumnHeader();
             this.imageList32 = new System.Windows.Forms.ImageList(this.components);
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.imageListTreeView = new System.Windows.Forms.ImageList(this.components);
             this.listViewMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -72,7 +73,7 @@ namespace SkeletonStructure
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.imageListDrag = new System.Windows.Forms.ImageList(this.components);
-            this.imageListTreeView = new System.Windows.Forms.ImageList(this.components);
+            this.flagAsFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -268,6 +269,14 @@ namespace SkeletonStructure
             this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
             this.treeView1.DragOver += new System.Windows.Forms.DragEventHandler(this.treeView1_DragOver);
             // 
+            // imageListTreeView
+            // 
+            this.imageListTreeView.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTreeView.ImageStream")));
+            this.imageListTreeView.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListTreeView.Images.SetKeyName(0, "folders_16.png");
+            this.imageListTreeView.Images.SetKeyName(1, "document_new_unlined_16.png");
+            this.imageListTreeView.Images.SetKeyName(2, "document_new_lined_16.png");
+            // 
             // listViewMenuStrip
             // 
             this.listViewMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -290,9 +299,10 @@ namespace SkeletonStructure
             this.newFileToolStripMenuItem,
             this.renameToolStripMenuItem,
             this.deleteToolStripMenuItem1,
-            this.editToolStripMenuItem});
+            this.editToolStripMenuItem,
+            this.flagAsFileToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(135, 114);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 158);
             // 
             // newFolderToolStripMenuItem
             // 
@@ -432,6 +442,7 @@ namespace SkeletonStructure
             // 
             this.contextMenuStrip2.Name = "contextMenuStrip2";
             this.contextMenuStrip2.Size = new System.Drawing.Size(61, 4);
+            this.contextMenuStrip2.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip2_Opening);
             // 
             // imageListDrag
             // 
@@ -439,11 +450,12 @@ namespace SkeletonStructure
             this.imageListDrag.ImageSize = new System.Drawing.Size(16, 16);
             this.imageListDrag.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // imageListTreeView
+            // flagAsFileToolStripMenuItem
             // 
-            this.imageListTreeView.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTreeView.ImageStream")));
-            this.imageListTreeView.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListTreeView.Images.SetKeyName(0, "ruxton.jpg");
+            this.flagAsFileToolStripMenuItem.Name = "flagAsFileToolStripMenuItem";
+            this.flagAsFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.flagAsFileToolStripMenuItem.Text = "Flag as File";
+            this.flagAsFileToolStripMenuItem.Click += new System.EventHandler(this.flagAsFileToolStripMenuItem_Click);
             // 
             // mainForm
             // 
@@ -521,6 +533,7 @@ namespace SkeletonStructure
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ImageList imageListDrag;
         private System.Windows.Forms.ImageList imageListTreeView;
+        private System.Windows.Forms.ToolStripMenuItem flagAsFileToolStripMenuItem;
     }
 }
 

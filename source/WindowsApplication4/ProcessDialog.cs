@@ -74,6 +74,18 @@ namespace SkeletonStructure
 //            this.Dispose();
         }
 
+        static string UppercaseFirst(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            char[] a = s.ToCharArray();
+            a[0] = char.ToUpper(a[0]);
+            return new string(a);
+        }
+
+
         private void collectRecurse(TreeNodeCollection nodes)
         {
             foreach (TreeNode node in nodes)
@@ -105,10 +117,13 @@ namespace SkeletonStructure
                     if (m.Value == "#module#")
                     {
                         replace = tree.Nodes[0].Text;
+                        sb.Replace(m.Value, replace.ToLower());
                     }
-
-                    if (replace != null)
-                        sb.Replace(m.Value, replace);
+                    if (m.Value == "#Module#")
+                    {
+                        replace = tree.Nodes[0].Text;
+                        sb.Replace(m.Value, UppercaseFirst(replace));
+                    }
                 } 
                 System.IO.Directory.CreateDirectory(@startPath + path);
                 return true;
@@ -138,10 +153,14 @@ namespace SkeletonStructure
                 if (m.Value == "#module#")
                 {
                     replace = tree.Nodes[0].Text;
+                    sb.Replace(m.Value, replace.ToLower());
+                }
+                if (m.Value == "#Module#")
+                {
+                    replace = tree.Nodes[0].Text;
+                    sb.Replace(m.Value, UppercaseFirst(replace));
                 }
 
-                if (replace != null)
-                    sb.Replace(m.Value, replace);
             }
 
             /**
@@ -160,10 +179,13 @@ namespace SkeletonStructure
                     if (m.Value == "#module#")
                     {
                         replace = tree.Nodes[0].Text;
+                        sbcontents.Replace(m.Value, replace.ToLower());
                     }
-
-                    if (replace != null)
-                        sbcontents.Replace(m.Value, replace);
+                    if (m.Value == "#Module#")
+                    {
+                        replace = tree.Nodes[0].Text;
+                        sbcontents.Replace(m.Value, UppercaseFirst(replace));
+                    }
                 }
 
                 System.IO.File.WriteAllText(@startPath + sb.ToString(), sbcontents.ToString());

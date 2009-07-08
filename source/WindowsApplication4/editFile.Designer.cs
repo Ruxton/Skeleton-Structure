@@ -49,6 +49,7 @@ namespace SkeletonStructure
             this.textBox1.Location = new System.Drawing.Point(12, 33);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox1.Size = new System.Drawing.Size(639, 466);
             this.textBox1.TabIndex = 1;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
@@ -73,7 +74,7 @@ namespace SkeletonStructure
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // Form2
+            // editFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -83,7 +84,7 @@ namespace SkeletonStructure
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.filenameLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form2";
+            this.Name = "editFile";
             this.Text = "Editing File";
             this.ParentChanged += new System.EventHandler(this.Form2_ParentChanged);
             this.Shown += new System.EventHandler(this.Form2_Shown);

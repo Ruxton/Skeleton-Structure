@@ -57,6 +57,7 @@ namespace SkeletonStructure
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.flagAsFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.dataSet1 = new System.Data.DataSet();
@@ -73,7 +74,6 @@ namespace SkeletonStructure
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.imageListDrag = new System.Windows.Forms.ImageList(this.components);
-            this.flagAsFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -126,7 +126,7 @@ namespace SkeletonStructure
             // 
             this.newToolStripMenuItem.Image = global::SkeletonStructure.Properties.Resources.document_new_lined_16;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -134,7 +134,7 @@ namespace SkeletonStructure
             // 
             this.openToolStripMenuItem.Image = global::SkeletonStructure.Properties.Resources.document_open_16;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -142,33 +142,32 @@ namespace SkeletonStructure
             // 
             this.saveToolStripMenuItem.Image = global::SkeletonStructure.Properties.Resources.save_16;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "&Save As";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // settingsToolStripMenuItem
             // 
-            this.settingsToolStripMenuItem.Enabled = false;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::SkeletonStructure.Properties.Resources.exit_16;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -183,7 +182,7 @@ namespace SkeletonStructure
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -302,7 +301,7 @@ namespace SkeletonStructure
             this.editToolStripMenuItem,
             this.flagAsFileToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 158);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(135, 136);
             // 
             // newFolderToolStripMenuItem
             // 
@@ -343,6 +342,13 @@ namespace SkeletonStructure
             this.editToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
+            // flagAsFileToolStripMenuItem
+            // 
+            this.flagAsFileToolStripMenuItem.Name = "flagAsFileToolStripMenuItem";
+            this.flagAsFileToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.flagAsFileToolStripMenuItem.Text = "Flag as File";
+            this.flagAsFileToolStripMenuItem.Click += new System.EventHandler(this.flagAsFileToolStripMenuItem_Click);
             // 
             // saveFileDialog1
             // 
@@ -449,13 +455,6 @@ namespace SkeletonStructure
             this.imageListDrag.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.imageListDrag.ImageSize = new System.Drawing.Size(16, 16);
             this.imageListDrag.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // flagAsFileToolStripMenuItem
-            // 
-            this.flagAsFileToolStripMenuItem.Name = "flagAsFileToolStripMenuItem";
-            this.flagAsFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.flagAsFileToolStripMenuItem.Text = "Flag as File";
-            this.flagAsFileToolStripMenuItem.Click += new System.EventHandler(this.flagAsFileToolStripMenuItem_Click);
             // 
             // mainForm
             // 

@@ -23,7 +23,7 @@ namespace SkeletonStructure
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void browse_Click(object sender, EventArgs e)
         {
             string strPath;
             string strCaption = "Select a directory.";
@@ -43,12 +43,18 @@ namespace SkeletonStructure
                 strPath = fld.Self.Path;
                 dlgResult = DialogResult.OK;
             }
+
+            if( !strPath.EndsWith("\\") )
+            {
+                strPath = strPath + "\\";
+            }
+
+
             if (dlgResult == DialogResult.OK)
             {
                 comboBox1.Text = strPath;
             }
                 
-
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -61,17 +67,32 @@ namespace SkeletonStructure
             this.Dispose();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void process_Click(object sender, EventArgs e)
         {
-            button2.Enabled = false;
-            progressBar1.Minimum = 0;
-            this.tree.PathSeparator = "\\";
-            this.startPath = comboBox1.Text;
-            TreeNodeCollection nodes = this.tree.Nodes;
-            progressBar1.Maximum = nodes.Count;
-            collectRecurse(nodes);
-            progressLabel.Text = "Completed!";
-//            this.Dispose();
+            if (comboBox1.Text.Trim() != "")
+            {
+
+                if (!comboBox1.Text.EndsWith("\\"))
+                {
+                    comboBox1.Text = comboBox1.Text + "\\";
+                }
+
+                this.tree.PathSeparator = "\\";
+                this.startPath = comboBox1.Text;
+
+                button2.Enabled = false;
+                progressBar1.Minimum = 0;
+
+                TreeNodeCollection nodes = this.tree.Nodes;
+                progressBar1.Maximum = nodes.Count;
+                collectRecurse(nodes);
+                progressLabel.Text = "Completed!";
+                //            this.Dispose();
+            }
+            else
+            {
+                MessageBox.Show("Please enter a target path", "Enter A Target Path");
+            }
         }
 
         static string UppercaseFirst(string s)

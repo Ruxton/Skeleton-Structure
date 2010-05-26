@@ -21,6 +21,7 @@ namespace TreeViewSerialization
         private const string XmlNodeTagAtt = "tag";
         private const string XmlNodeExpandedAtt = "expanded";
         private const string XmlNodeImageIndexAtt = "imageindex";
+        private const string XmlNodeImageSelectedIndexAtt = "selectedimageindex";
 
         private ArrayList expandNodes = new ArrayList();
 
@@ -61,6 +62,7 @@ namespace TreeViewSerialization
                 textWriter.WriteStartElement(XmlNodeTag);
                 textWriter.WriteAttributeString(XmlNodeTextAtt, node.Text);
                 textWriter.WriteAttributeString(XmlNodeImageIndexAtt, node.ImageIndex.ToString());
+                textWriter.WriteAttributeString(XmlNodeImageSelectedIndexAtt, node.SelectedImageIndex.ToString());
                 textWriter.WriteAttributeString(XmlNodeExpandedAtt, node.IsExpanded.ToString());
                 if (node.Tag != null)
                     textWriter.WriteAttributeString(XmlNodeTagAtt, node.Tag.ToString());
@@ -176,6 +178,10 @@ namespace TreeViewSerialization
             else if (propertyName == XmlNodeImageIndexAtt)
             {
                 node.ImageIndex = int.Parse(value);
+            }
+            else if (propertyName == XmlNodeImageSelectedIndexAtt)
+            {
+                node.SelectedImageIndex = int.Parse(value);
             }
             else if (propertyName == XmlNodeTagAtt)
             {

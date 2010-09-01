@@ -1,0 +1,4 @@
+Syntax: glob
+Debug/
+Release/
+bin/
